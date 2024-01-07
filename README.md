@@ -8,7 +8,7 @@ This project is realtime search engine built with `ruby on rails` and in order t
 
 ## Live Link
 
-[Live Link](https://rails-tw19.onrender.com/articles)
+[Live Link](https://afternoon-chamber-81037-211f2e61f0cf.herokuapp.com)
 
 ## Modules
 
@@ -122,6 +122,13 @@ bundle exec rspec
 
     This solution ensures efficient handling of searches, prevents redundant saves, and tracks word occurrences for analytics.
 ```
+
+## App Images
+
+(/search.png)
+(/analytics.png)
+(/analytics1.png)
+
 
 ### 🤝 Contributing
 
