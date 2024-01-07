@@ -121,6 +121,8 @@ bundle exec rspec
     Create or update Analytic records for words longer than 2 characters to track their occurrence.
 
     This solution ensures efficient handling of searches, prevents redundant saves, and tracks word occurrences for analytics.
+
+    Note that for similar searches made in different requests, both will be saved, so results similar to those expected from a pyramid problem will be recorded. An example of this can be seen in the image below, where one person has searched for "a passag" and another has searched for "a passage", leading to the recording of very similar results. This could perhaps be an interesting problem to solve in a further development of the solution.
 ```
 
 ## App Images
