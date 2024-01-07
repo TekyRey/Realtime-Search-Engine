@@ -1,0 +1,23 @@
+<div class="row">
+  <% if @articles.present? %>
+    <% @articles.each do |article| %>
+      <div class="col-md-4">
+        <div class="card article-card m-2">
+            <h5 class="card-header"><%= article.title %> </h5>
+          <div class="card-body">
+            <p class="card-text"><%= article.content %></p>
+          </div>
+
+          <div class="card-footer">
+            <%= link_to "View", edit_article_path(article), class: "btn btn-warning" %>
+            
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="col-md-12 text-center">
+      <p>No articles available.</p>
+    </div>
+  <% end %>
+</div>

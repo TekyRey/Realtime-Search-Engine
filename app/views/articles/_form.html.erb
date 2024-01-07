@@ -1,0 +1,27 @@
+<%= form_with(model: article, class: "my-4") do |form| %>
+  <% if article.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(article.errors.count, "error") %> prohibited this article from being saved:</h2>
+
+      <ul>
+        <% article.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="search-container m-4">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control search-input" %>
+  </div>
+
+    <div class="search-container m-4">
+    <%= form.label :content, class: "form-label" %>
+    <%= form.text_area :content, class: "form-control search-input", rows: 5 %>
+  </div>
+
+  <div>
+    <%= form.submit "Create Article", class: "btn btn-success" %>
+  </div>
+<% end %>

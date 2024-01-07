@@ -1,0 +1,154 @@
+<script src="https://cdn.skypack.dev/@hotwired/turbo"></script>
+<!-- Include Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="row mb-4 align-items-center">
+  <div class="col-md-9 text-center">
+    <h1>Ranking of searches by phrases</h1>
+  </div>
+  <div class="col-md-3 text-right">
+    <%= link_to "Back to search page", root_path, class: "btn btn-primary" %>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-auto">
+    <!-- Compact Bootstrap Card for Unique Users -->
+    <div class="card bg-info text-white">
+      <div class="card-body p-2">
+        <h5 class="card-title m-0">Unique Users:</h5>
+        <p class="card-text m-0">
+          <span class="badge badge-light" style="font-size: 1.2em;"><%= @unique_user_count %></span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row align-items-start">
+  <div class="col-md-6">
+    <h3>All Users' Search Phrase Occurrence</h3>
+    <canvas id="searchHistogramAll" width="400" height="200"></canvas>
+  </div>
+  <div class="col-md-6">
+    <h3>Current User's Search Phrase Occurrence</h3>
+    <canvas id="searchHistogramUser" width="400" height="200"></canvas>
+  </div>
+</div>
+
+<div class="row align-items-start mt-4">
+  <div class="col-md-6">
+    <h3>Word Frequency Analysis</h3>
+    <div style="height:40vh; width:80vw;">
+      <canvas id="wordFrequencyChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('turbo:load', function() {
+    var ctxAll = document.getElementById('searchHistogramAll').getContext('2d');
+    var existingChartAll = window.searchHistogramChartAll;
+
+    if (existingChartAll) {
+      existingChartAll.destroy();
+    }
+
+    var phrasesAll = <%= raw @all_time_popular_searches.map(&:first).to_json %>;
+    var countsAll = <%= raw @all_time_popular_searches.map(&:last).to_json %>;
+
+    window.searchHistogramChartAll = new Chart(ctxAll, {
+      type: 'bar',
+      data: {
+        labels: phrasesAll,
+        datasets: [{
+          label: 'Phrase Occurrence (All Users)',
+          data: countsAll,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    var ctxUser = document.getElementById('searchHistogramUser').getContext('2d');
+    var existingChartUser = window.searchHistogramChartUser;
+
+    if (existingChartUser) {
+      existingChartUser.destroy();
+    }
+
+    var phrasesUser = <%= raw @user_specific_searches.map(&:first).to_json %>;
+    var countsUser = <%= raw @user_specific_searches.map(&:last).to_json %>;
+
+    window.searchHistogramChartUser = new Chart(ctxUser, {
+      type: 'bar',
+      data: {
+        labels: phrasesUser,
+        datasets: [{
+          label: 'Phrase Occurrence (Current User)',
+          data: countsUser,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    var ctxWordFreq = document.getElementById('wordFrequencyChart').getContext('2d');
+    var existingWordFreqChart = window.wordFrequencyChart;
+
+    if (existingWordFreqChart && typeof existingWordFreqChart.destroy === 'function') {
+      existingWordFreqChart.destroy();
+    }
+
+    var words = <%= raw @word_frequency.map(&:first).to_json %>;
+    var wordCounts = <%= raw @word_frequency.map(&:last).to_json %>;
+
+    window.wordFrequencyChart = new Chart(ctxWordFreq, {
+      type: 'pie',
+      data: {
+        labels: words,
+        datasets: [{
+          label: 'Word Frequency',
+          data: wordCounts,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      }
+    });
+  });
+
+  
+</script>

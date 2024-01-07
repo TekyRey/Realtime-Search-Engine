@@ -1,0 +1,23 @@
+<h1>View Article</h1>
+
+<%= form_with(model: @article, local: true, class: "my-4") do |form| %>
+  <div class="search-container m-4">
+  <div>
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control search-input align-center" %>
+  </div>
+
+  <div>
+    <%= form.label :content, class: "form-label" %>
+    <%= form.text_area :content, class: "form-control search-input", rows: 5 %>
+  </div>
+  </div>
+
+<% end %>
+
+<br>
+
+<div>
+  <%= link_to "Back to Articles", articles_path, class: "btn btn-warning text-dark" %>
+</div>
+

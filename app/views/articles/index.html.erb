@@ -1,0 +1,16 @@
+    <h1>Articles</h1>
+    <div class="search-container">
+      <%= form_with(url: articles_path, method: "GET", data: { controller: "form-submission", turbo_frame: "articles", turbo_action: "advance" }) do |form| %>
+        <%= form.label :query, "Search by title or content:" %>
+        <%= form.text_field :query, class: "search-input", data: { action: "input->form-submission#search" } %>
+        <div class="search-overlay">
+          <!-- Add content for the overlay here, e.g., search suggestions -->
+        </div>
+            <%= link_to "New article", new_article_path, class: "btn btn-outline-warning text-dark" %>
+
+            <%= link_to "View Analytics", analytics_index_path, class: "btn btn-outline-success text-dark" %>
+      <% end %>
+    </div>
+    <!-- Rendering the new partial here -->
+    <%= render "articles", articles: @articles %>
+
