@@ -13,6 +13,11 @@ class AnalyticsController < ApplicationController
     @trending_searches_this_week = trending_searches(Time.zone.now.beginning_of_week)
     @trending_searches_this_month = trending_searches(Time.zone.now.beginning_of_month)
 
+    puts "HERE"
+    puts @trending_searches_today
+    puts @trending_searches_this_week
+    puts @trending_searches_this_month
+
     @all_time_popular_questions = calculate_popularity(true)
     @word_frequency = word_frequency
 

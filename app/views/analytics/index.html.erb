@@ -1,5 +1,3 @@
-<script src="https://cdn.skypack.dev/@hotwired/turbo"></script>
-<!-- Include Chart.js library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="row mb-4 align-items-center">
@@ -13,7 +11,6 @@
 
 <div class="row mb-3">
   <div class="col-auto">
-    <!-- Compact Bootstrap Card for Unique Users -->
     <div class="card bg-info text-white">
       <div class="card-body p-2">
         <h5 class="card-title m-0">Unique Users:</h5>
@@ -39,9 +36,24 @@
 <div class="row align-items-start mt-4">
   <div class="col-md-6">
     <h3>Word Frequency Analysis</h3>
-    <div style="height:40vh; width:80vw;">
+    <div style="height:40vh; width:40vw;">
       <canvas id="wordFrequencyChart"></canvas>
     </div>
+  </div>
+  <div class="col-md-6">
+    <h3>Trending Searches Today</h3>
+    <canvas id="trendingTodayChart" width="400" height="200"></canvas>
+  </div>
+</div>
+
+<div class="row align-items-start mt-4">
+  <div class="col-md-6">
+    <h3>Trending Searches This Week</h3>
+    <canvas id="trendingWeekChart" width="400" height="200"></canvas>
+  </div>
+  <div class="col-md-6">
+    <h3>Trending Searches This Month</h3>
+    <canvas id="trendingMonthChart" width="400" height="200"></canvas>
   </div>
 </div>
 
@@ -148,7 +160,77 @@
         maintainAspectRatio: false,
       }
     });
-  });
 
-  
+    var ctxTrendingToday = document.getElementById('trendingTodayChart').getContext('2d');
+    var trendingToday = <%= raw @trending_searches_today.map(&:first).to_json %>;
+    var trendingTodayCounts = <%= raw @trending_searches_today.map(&:last).to_json %>;
+    new Chart(ctxTrendingToday, {
+      type: 'bar',
+      data: {
+        labels: trendingToday,
+        datasets: [{
+          label: 'Trending Searches Today',
+          data: trendingTodayCounts,
+          backgroundColor: 'rgba(255, 159, 64, 0.2)',
+          borderColor: 'rgba(255, 159, 64, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    var ctxTrendingWeek = document.getElementById('trendingWeekChart').getContext('2d');
+    var trendingWeek = <%= raw @trending_searches_this_week.map(&:first).to_json %>;
+    var trendingWeekCounts = <%= raw @trending_searches_this_week.map(&:last).to_json %>;
+    new Chart(ctxTrendingWeek, {
+      type: 'bar',
+      data: {
+        labels: trendingWeek,
+        datasets: [{
+          label: 'Trending Searches This Week',
+          data: trendingWeekCounts,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    var ctxTrendingMonth = document.getElementById('trendingMonthChart').getContext('2d');
+    var trendingMonth = <%= raw @trending_searches_this_month.map(&:first).to_json %>;
+    var trendingMonthCounts = <%= raw @trending_searches_this_month.map(&:last).to_json %>;
+    new Chart(ctxTrendingMonth, {
+      type: 'bar',
+      data: {
+        labels: trendingMonth,
+        datasets: [{
+          label: 'Trending Searches This Month',
+          data: trendingMonthCounts,
+          backgroundColor: 'rgba(255, 206, 86, 0.2)',
+          borderColor: 'rgba(255, 206, 86, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  });
 </script>
