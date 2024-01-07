@@ -125,9 +125,9 @@ bundle exec rspec
 
 ## App Images
 
-(/search.png)
-(/analytics.png)
-(/analytics1.png)
+![Local Image](/search.png)
+![Local Image](/analytics.png)
+![Local Image](/analytics1.png)
 
 
 ### 🤝 Contributing
