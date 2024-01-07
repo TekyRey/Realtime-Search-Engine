@@ -35,8 +35,8 @@ The analytics module provides insightful analytics on the most frequently search
 To run this project locally, follow these simple steps:
 
 ```bash
-git clone git@github.com:TekyRey/realtime-search.git
-cd realtime-search
+git clone git@github.com:TekyRey/Realtime-Search-Engine.git
+cd Realtime-Search-Engine
 ```
 
 ### Prerequisites
