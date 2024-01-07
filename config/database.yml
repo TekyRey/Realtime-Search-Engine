@@ -19,6 +19,8 @@ test:
 
 production:
   <<: *default
-  database: postgress-db
-  username: realtime_search
-  password: <%= ENV["DATABASE_URL"] %>
+  database: rdb/production.sqlite3
+  username: root
+  password:
+  pool: 5
+  timeout: 5000
